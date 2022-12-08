@@ -1,9 +1,18 @@
 <script setup>
 const { slug } = useRoute().params
 
-const story = await useStoryblok(slug ? slug.join('/') : 'home', {
-  version: 'draft',
-})
+const resolveRelations = ['popular-articles.articles']
+
+const story = await useAsyncStoryblok(
+  slug ? slug.join('/') : 'home',
+  {
+    version: 'draft',
+    resolve_relations: resolveRelations,
+  },
+  {
+    resolveRelations,
+  }
+)
 </script>
  
 <template>
