@@ -7,13 +7,18 @@
       <h2 class="text-2xl text-[#1d243d] font-bold mb-4">
         {{ blok.subtitle }}
       </h2>
-      <div v-html="resolvedRichText" class="prose"></div>
+      <Vue3RuntimeTemplate :template="resolvedRichText"></Vue3RuntimeTemplate>
     </div>
   </div>
 </template>
  
 <script setup>
+import Vue3RuntimeTemplate from "vue3-runtime-template"
 const props = defineProps({ blok: Object })
 
-const resolvedRichText = computed(() => renderRichText(props.blok.content))
+const resolvedRichText = computed(() => renderRichText(props.blok.content, {
+  resolver: (component, blok) => {
+    return `<component :blok='${JSON.stringify(blok)}' is="${component}" />`
+  },
+}))
 </script>

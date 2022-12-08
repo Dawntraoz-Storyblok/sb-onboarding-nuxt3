@@ -14,4 +14,10 @@ export default defineNuxtConfig({
     ],
     '@nuxtjs/tailwindcss',
   ],
+  hooks: {
+    'vite:extendConfig': (config, { isClient, isServer }) => {
+      if (isClient)
+        config.resolve.alias.vue = 'vue/dist/vue.esm-bundler.js'
+    },
+  },
 })
